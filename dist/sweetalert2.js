@@ -1,13 +1,22 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 // SweetAlert2
 // github.com/limonte/sweetalert2
 
-var sweetAlert, swal;
-export default sweetAlert = swal = function() {
+var sweetAlert, _swal;
+
+exports.default = sweetAlert = _swal = function swal() {
   var args = arguments;
   var modal = getModal();
 
   if (modal === null) {
-    swal.init();
+    _swal.init();
     modal = getModal();
   }
 
@@ -16,12 +25,14 @@ export default sweetAlert = swal = function() {
   }
 
   return modalDependant.apply(this, args);
-}
+};
 
 /*
  * Set type, text and actions on modal
  */
-var setParameters = function(params) {
+
+
+var setParameters = function setParameters(params) {
   var i;
   var modal = getModal();
 
@@ -36,14 +47,7 @@ var setParameters = function(params) {
   var cssNode = document.createElement('style');
   cssNode.type = 'text/css';
   cssNode.id = mediaqueryId;
-  cssNode.innerHTML =
-    '@media screen and (max-width: ' + params.width + 'px) {' +
-      '.' + swalClasses.modal + ' {' +
-        'max-width: 100%;' +
-        'left: 0 !important;' +
-        'margin-left: 0 !important;' +
-      '}' +
-    '}';
+  cssNode.innerHTML = '@media screen and (max-width: ' + params.width + 'px) {' + '.' + swalClasses.modal + ' {' + 'max-width: 100%;' + 'left: 0 !important;' + 'margin-left: 0 !important;' + '}' + '}';
   head.appendChild(cssNode);
 
   var $title = modal.querySelector('h2');
@@ -58,7 +62,7 @@ var setParameters = function(params) {
 
   // Content
   if (params.text || params.html) {
-    if (typeof params.html === 'object') {
+    if (_typeof(params.html) === 'object') {
       $content.innerHTML = '';
       if (0 in params.html) {
         for (i = 0; i in params.html; i++) {
@@ -68,7 +72,7 @@ var setParameters = function(params) {
         $content.appendChild(params.html);
       }
     } else {
-      $content.innerHTML = params.html || (params.text.split('\n').join('<br>'));
+      $content.innerHTML = params.html || params.text.split('\n').join('<br>');
     }
     show($content);
   } else {
@@ -122,7 +126,6 @@ var setParameters = function(params) {
       default:
         break;
     }
-
   }
 
   // Custom image
@@ -211,7 +214,7 @@ var setParameters = function(params) {
         radioInput.type = 'radio';
         radioInput.name = swalClasses.radio;
         radioInput.value = radioValue;
-        radioInput.id = swalClasses.radio + '-' + (id++);
+        radioInput.id = swalClasses.radio + '-' + id++;
         if (params.inputValue === radioValue) {
           radioInput.checked = true;
         }
@@ -246,7 +249,7 @@ var setParameters = function(params) {
     case null:
       break;
     default:
-      window.console.error('Unexpected type of input! Expected "text" or "email" or "password", "select", "checkbox" or "textarea", got ' + typeof arguments[0]);
+      window.console.error('Unexpected type of input! Expected "text" or "email" or "password", "select", "checkbox" or "textarea", got ' + _typeof(arguments[0]));
       break;
   }
 
@@ -310,7 +313,7 @@ var setParameters = function(params) {
 /*
  * Global function to click 'Cancel' button
  */
-sweetAlert.clickCancel = swal.clickCancel = function() {
+sweetAlert.clickCancel = _swal.clickCancel = function () {
   var modal = getModal();
   var $cancelButton = modal.querySelector('button.' + swalClasses.cancel);
   $cancelButton.click();
@@ -319,7 +322,7 @@ sweetAlert.clickCancel = swal.clickCancel = function() {
 /*
  * Global function to click 'Confirm' button
  */
-sweetAlert.clickConfirm = swal.clickConfirm = function() {
+sweetAlert.clickConfirm = _swal.clickConfirm = function () {
   var modal = getModal();
   var $confirmButton = modal.querySelector('button.' + swalClasses.confirm);
   $confirmButton.click();
@@ -328,40 +331,12 @@ sweetAlert.clickConfirm = swal.clickConfirm = function() {
 /*
  * Add modal + overlay to DOM
  */
-swal.init = function() {
+_swal.init = function () {
   if (document.getElementsByClassName(swalClasses.container).length) {
     return;
   }
 
-  var sweetHTML =
-    '<div class="' + swalClasses.overlay + '" tabIndex="-1"></div>' +
-    '<div class="' + swalClasses.modal + '" style="display: none" tabIndex="-1">' +
-      '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.error + '">' +
-        '<span class="x-mark"><span class="line left"></span><span class="line right"></span></span>' +
-      '</div>' +
-      '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.question + '">?</div>' +
-      '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.warning + '">!</div>' +
-      '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.info + '">i</div>' +
-      '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.success + '">' +
-        '<span class="line tip"></span> <span class="line long"></span>' +
-        '<div class="placeholder"></div> <div class="fix"></div>' +
-      '</div>' +
-      '<img class="' + swalClasses.image + '">' +
-      '<h2></h2>' +
-      '<div class="' + swalClasses.content + '"></div>' +
-      '<input class="' + swalClasses.input + '">' +
-      '<select class="' + swalClasses.select + '"></select>' +
-      '<div class="' + swalClasses.radio + '"></div>' +
-      '<label for="' + swalClasses.checkbox + '" class="' + swalClasses.checkbox + '">' +
-        '<input type="checkbox" id="' + swalClasses.checkbox + '">' +
-      '</label>' +
-      '<textarea class="' + swalClasses.textarea + '"></textarea>' +
-      '<div class="' + swalClasses.validationerror + '"></div>' +
-      '<hr class="' + swalClasses.spacer + '">' +
-      '<button class="' + swalClasses.confirm + '">OK</button>' +
-      '<button class="' + swalClasses.cancel + '">Cancel</button>' +
-      '<span class="' + swalClasses.close + '">&times;</span>' +
-    '</div>';
+  var sweetHTML = '<div class="' + swalClasses.overlay + '" tabIndex="-1"></div>' + '<div class="' + swalClasses.modal + '" style="display: none" tabIndex="-1">' + '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.error + '">' + '<span class="x-mark"><span class="line left"></span><span class="line right"></span></span>' + '</div>' + '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.question + '">?</div>' + '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.warning + '">!</div>' + '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.info + '">i</div>' + '<div class="' + swalClasses.icon + ' ' + swalClasses.iconTypes.success + '">' + '<span class="line tip"></span> <span class="line long"></span>' + '<div class="placeholder"></div> <div class="fix"></div>' + '</div>' + '<img class="' + swalClasses.image + '">' + '<h2></h2>' + '<div class="' + swalClasses.content + '"></div>' + '<input class="' + swalClasses.input + '">' + '<select class="' + swalClasses.select + '"></select>' + '<div class="' + swalClasses.radio + '"></div>' + '<label for="' + swalClasses.checkbox + '" class="' + swalClasses.checkbox + '">' + '<input type="checkbox" id="' + swalClasses.checkbox + '">' + '</label>' + '<textarea class="' + swalClasses.textarea + '"></textarea>' + '<div class="' + swalClasses.validationerror + '"></div>' + '<hr class="' + swalClasses.spacer + '">' + '<button class="' + swalClasses.confirm + '">OK</button>' + '<button class="' + swalClasses.cancel + '">Cancel</button>' + '<span class="' + swalClasses.close + '">&times;</span>' + '</div>';
   var sweetWrap = document.createElement('div');
   sweetWrap.className = swalClasses.container;
 
@@ -375,27 +350,27 @@ swal.init = function() {
   var $checkbox = modal.querySelector('#' + swalClasses.checkbox);
   var $textarea = getChildByClass(modal, swalClasses.textarea);
 
-  $input.oninput = function() {
-    swal.resetValidationError();
+  $input.oninput = function () {
+    _swal.resetValidationError();
   };
 
-  $input.onkeyup = function(event) {
+  $input.onkeyup = function (event) {
     event.stopPropagation();
     if (event.keyCode === 13) {
-      swal.clickConfirm();
+      _swal.clickConfirm();
     }
   };
 
-  $select.onchange = function() {
-    swal.resetValidationError();
+  $select.onchange = function () {
+    _swal.resetValidationError();
   };
 
-  $checkbox.onchange = function() {
-    swal.resetValidationError();
+  $checkbox.onchange = function () {
+    _swal.resetValidationError();
   };
 
-  $textarea.onchange = function() {
-    swal.resetValidationError();
+  $textarea.onchange = function () {
+    _swal.resetValidationError();
   };
 };
 
@@ -403,11 +378,11 @@ swal.init = function() {
  * Set default params for each popup
  * @param {Object} userParams
  */
-swal.setDefaults = function(userParams) {
+_swal.setDefaults = function (userParams) {
   if (!userParams) {
     throw new Error('userParams is required');
   }
-  if (typeof userParams !== 'object') {
+  if ((typeof userParams === 'undefined' ? 'undefined' : _typeof(userParams)) !== 'object') {
     throw new Error('userParams has to be a object');
   }
 
@@ -417,7 +392,7 @@ swal.setDefaults = function(userParams) {
 /*
  * Global function to close sweetAlert
  */
-sweetAlert.close = swal.close = sweetAlert.closeModal = swal.closeModal = function() {
+sweetAlert.close = _swal.close = sweetAlert.closeModal = _swal.closeModal = function () {
   var modal = getModal();
   _hide(getOverlay());
   _hide(modal);
@@ -442,9 +417,9 @@ sweetAlert.close = swal.close = sweetAlert.closeModal = swal.closeModal = functi
   resetPrevState();
 };
 
-var swalPrefix ='swal2-';
+var swalPrefix = 'swal2-';
 // window.swalPrefix = 'swal2-';
-var prefix = function(items) {
+var prefix = function prefix(items) {
   var result = {};
   for (var i in items) {
     result[items[i]] = swalPrefix + items[i];
@@ -453,10 +428,7 @@ var prefix = function(items) {
 };
 
 // window.swalClasses = prefix([
-var swalClasses = prefix([
-  'container', 'modal', 'overlay', 'close', 'content', 'spacer', 'confirm', 'cancel', 'icon', 'image',
-  'input', 'select', 'radio', 'checkbox', 'textarea', 'validationerror'
-]);
+var swalClasses = prefix(['container', 'modal', 'overlay', 'close', 'content', 'spacer', 'confirm', 'cancel', 'icon', 'image', 'input', 'select', 'radio', 'checkbox', 'textarea', 'validationerror']);
 
 // window.swalClasses.iconTypes = prefix(['success', 'warning', 'info', 'question', 'error']);
 swalClasses.iconTypes = prefix(['success', 'warning', 'info', 'question', 'error']);
@@ -503,19 +475,19 @@ var defaultParams = {
 /*
  * Manipulate DOM
  */
-var getModal = function() {
+var getModal = function getModal() {
   return document.querySelector('.' + swalClasses.modal);
 };
 
-var getOverlay = function() {
+var getOverlay = function getOverlay() {
   return document.querySelector('.' + swalClasses.overlay);
 };
 
-var hasClass = function(elem, className) {
+var hasClass = function hasClass(elem, className) {
   return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
 };
 
-var focusInput = function(input) {
+var focusInput = function focusInput(input) {
   input.focus();
 
   // http://stackoverflow.com/a/2345915/1331425
@@ -524,13 +496,13 @@ var focusInput = function(input) {
   input.value = val;
 };
 
-var addClass = function(elem, className) {
+var addClass = function addClass(elem, className) {
   if (className && !hasClass(elem, className)) {
     elem.className += ' ' + className;
   }
 };
 
-var removeClass = function(elem, className) {
+var removeClass = function removeClass(elem, className) {
   var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
   if (hasClass(elem, className)) {
     while (newClass.indexOf(' ' + className + ' ') >= 0) {
@@ -540,7 +512,7 @@ var removeClass = function(elem, className) {
   }
 };
 
-var getChildByClass = function(elem, className) {
+var getChildByClass = function getChildByClass(elem, className) {
   for (var i = 0; i < elem.childNodes.length; i++) {
     if (elem.childNodes[i].classList.contains(className)) {
       return elem.childNodes[i];
@@ -548,12 +520,12 @@ var getChildByClass = function(elem, className) {
   }
 };
 
-var _show = function(elem) {
+var _show = function _show(elem) {
   elem.style.opacity = '';
   elem.style.display = 'block';
 };
 
-var show = function(elems) {
+var show = function show(elems) {
   if (elems && !elems.length) {
     return _show(elems);
   }
@@ -562,12 +534,12 @@ var show = function(elems) {
   }
 };
 
-var _hide = function(elem) {
+var _hide = function _hide(elem) {
   elem.style.opacity = '';
   elem.style.display = 'none';
 };
 
-var hide = function(elems) {
+var hide = function hide(elems) {
   if (elems && !elems.length) {
     return _hide(elems);
   }
@@ -576,7 +548,7 @@ var hide = function(elems) {
   }
 };
 
-var removeStyleProperty = function(elem, property) {
+var removeStyleProperty = function removeStyleProperty(elem, property) {
   if (elem.style.removeProperty) {
     elem.style.removeProperty(property);
   } else {
@@ -584,7 +556,7 @@ var removeStyleProperty = function(elem, property) {
   }
 };
 
-var getTopMargin = function(elem) {
+var getTopMargin = function getTopMargin(elem) {
   elem.style.left = '-9999px';
   elem.style.display = 'block';
 
@@ -593,16 +565,16 @@ var getTopMargin = function(elem) {
 
   elem.style.left = '';
   elem.style.display = 'none';
-  return ('-' + parseInt(height / 2 + paddingTop, 10) + 'px');
+  return '-' + parseInt(height / 2 + paddingTop, 10) + 'px';
 };
 
-var fadeIn = function(elem, interval) {
+var fadeIn = function fadeIn(elem, interval) {
   if (+elem.style.opacity < 1) {
     interval = interval || 16;
     elem.style.opacity = 0;
     elem.style.display = 'block';
     var last = +new Date();
-    var tick = function() {
+    var tick = function tick() {
       elem.style.opacity = +elem.style.opacity + (new Date() - last) / 100;
       last = +new Date();
 
@@ -614,7 +586,7 @@ var fadeIn = function(elem, interval) {
   }
 };
 
-var extend = function(a, b) {
+var extend = function extend(a, b) {
   for (var key in b) {
     if (b.hasOwnProperty(key)) {
       a[key] = b[key];
@@ -624,7 +596,7 @@ var extend = function(a, b) {
   return a;
 };
 
-var fireClick = function(node) {
+var fireClick = function fireClick(node) {
   // Taken from http://www.nonobtrusive.com/2011/11/29/programatically-fire-crossbrowser-click-event-with-javascript/
   // Then fixed for today's Chrome browser.
   if (typeof MouseEvent === 'function') {
@@ -647,7 +619,7 @@ var fireClick = function(node) {
   }
 };
 
-var stopEventPropagation = function(e) {
+var stopEventPropagation = function stopEventPropagation(e) {
   // In particular, make sure the space bar doesn't scroll the main window.
   if (typeof e.stopPropagation === 'function') {
     e.stopPropagation();
@@ -663,7 +635,7 @@ var previousWindowKeyDown;
 var lastFocusedButton;
 
 // Reset the page to its previous state
-var resetPrevState = function() {
+var resetPrevState = function resetPrevState() {
   var modal = getModal();
   window.onkeydown = previousWindowKeyDown;
   document.onclick = previousDocumentClick;
@@ -684,7 +656,7 @@ var resetPrevState = function() {
 /*
  * Set hover, active and focus-states for buttons (source: http://www.sitepoint.com/javascript-generate-lighter-darker-color)
  */
-var colorLuminance = function(hex, lum) {
+var colorLuminance = function colorLuminance(hex, lum) {
   // Validate hex string
   hex = String(hex).replace(/[^0-9a-f]/gi, '');
   if (hex.length < 6) {
@@ -696,18 +668,17 @@ var colorLuminance = function(hex, lum) {
   var rgb = '#';
   for (var i = 0; i < 3; i++) {
     var c = parseInt(hex.substr(i * 2, 2), 16);
-    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+    c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
     rgb += ('00' + c).substr(c.length);
   }
 
   return rgb;
 };
 
-
 /*
  * Animations
  */
-var openModal = function() {
+var openModal = function openModal() {
   var modal = getModal();
   fadeIn(getOverlay(), 10);
   show(modal);
@@ -722,7 +693,7 @@ var openModal = function() {
 /*
  * Set 'margin-top'-property on modal based on its computed height
  */
-var fixVerticalPosition = function() {
+var fixVerticalPosition = function fixVerticalPosition() {
   var modal = getModal();
 
   modal.style.marginTop = getTopMargin(getModal());
@@ -737,60 +708,60 @@ function modalDependant() {
 
   var params = extend({}, defaultParams);
 
-  switch (typeof arguments[0]) {
+  switch (_typeof(arguments[0])) {
 
     case 'string':
       params.title = arguments[0];
-      params.text  = arguments[1] || '';
-      params.type  = arguments[2] || '';
+      params.text = arguments[1] || '';
+      params.type = arguments[2] || '';
 
       break;
 
     case 'object':
-      params.title              = arguments[0].title || defaultParams.title;
-      params.text               = arguments[0].text || defaultParams.text;
-      params.html               = arguments[0].html || defaultParams.html;
-      params.type               = arguments[0].type || defaultParams.type;
-      params.animation          = arguments[0].animation !== undefined ? arguments[0].animation : defaultParams.animation;
-      params.customClass        = arguments[0].customClass || params.customClass;
-      params.allowOutsideClick  = arguments[0].allowOutsideClick !== undefined ? arguments[0].allowOutsideClick : defaultParams.allowOutsideClick;
-      params.allowEscapeKey     = arguments[0].allowEscapeKey !== undefined ? arguments[0].allowEscapeKey : defaultParams.allowEscapeKey;
-      params.showConfirmButton  = arguments[0].showConfirmButton !== undefined ? arguments[0].showConfirmButton : defaultParams.showConfirmButton;
-      params.showCancelButton   = arguments[0].showCancelButton !== undefined ? arguments[0].showCancelButton : defaultParams.showCancelButton;
-      params.preConfirm         = arguments[0].preConfirm || defaultParams.preConfirm;
-      params.timer              = parseInt(arguments[0].timer, 10) || defaultParams.timer;
-      params.width              = parseInt(arguments[0].width, 10) || defaultParams.width;
-      params.padding            = parseInt(arguments[0].padding, 10) || defaultParams.padding;
-      params.background         = arguments[0].background !== undefined ? arguments[0].background : defaultParams.background;
+      params.title = arguments[0].title || defaultParams.title;
+      params.text = arguments[0].text || defaultParams.text;
+      params.html = arguments[0].html || defaultParams.html;
+      params.type = arguments[0].type || defaultParams.type;
+      params.animation = arguments[0].animation !== undefined ? arguments[0].animation : defaultParams.animation;
+      params.customClass = arguments[0].customClass || params.customClass;
+      params.allowOutsideClick = arguments[0].allowOutsideClick !== undefined ? arguments[0].allowOutsideClick : defaultParams.allowOutsideClick;
+      params.allowEscapeKey = arguments[0].allowEscapeKey !== undefined ? arguments[0].allowEscapeKey : defaultParams.allowEscapeKey;
+      params.showConfirmButton = arguments[0].showConfirmButton !== undefined ? arguments[0].showConfirmButton : defaultParams.showConfirmButton;
+      params.showCancelButton = arguments[0].showCancelButton !== undefined ? arguments[0].showCancelButton : defaultParams.showCancelButton;
+      params.preConfirm = arguments[0].preConfirm || defaultParams.preConfirm;
+      params.timer = parseInt(arguments[0].timer, 10) || defaultParams.timer;
+      params.width = parseInt(arguments[0].width, 10) || defaultParams.width;
+      params.padding = parseInt(arguments[0].padding, 10) || defaultParams.padding;
+      params.background = arguments[0].background !== undefined ? arguments[0].background : defaultParams.background;
 
-      params.confirmButtonText  = arguments[0].confirmButtonText || defaultParams.confirmButtonText;
+      params.confirmButtonText = arguments[0].confirmButtonText || defaultParams.confirmButtonText;
       params.confirmButtonColor = arguments[0].confirmButtonColor || defaultParams.confirmButtonColor;
       params.confirmButtonClass = arguments[0].confirmButtonClass || params.confirmButtonClass;
-      params.cancelButtonText   = arguments[0].cancelButtonText || defaultParams.cancelButtonText;
-      params.cancelButtonColor  = arguments[0].cancelButtonColor || defaultParams.cancelButtonColor;
-      params.cancelButtonClass  = arguments[0].cancelButtonClass || params.cancelButtonClass;
-      params.buttonsStyling     = arguments[0].buttonsStyling !== undefined ? arguments[0].buttonsStyling : defaultParams.buttonsStyling;
-      params.reverseButtons     = arguments[0].reverseButtons !== undefined ? arguments[0].reverseButtons : defaultParams.reverseButtons;
-      params.showCloseButton    = arguments[0].showCloseButton !== undefined ? arguments[0].showCloseButton : defaultParams.showCloseButton;
-      params.imageUrl           = arguments[0].imageUrl || defaultParams.imageUrl;
-      params.imageWidth         = arguments[0].imageWidth || defaultParams.imageWidth;
-      params.imageHeight        = arguments[0].imageHeight || defaultParams.imageHeight;
-      params.imageClass         = arguments[0].imageClass || defaultParams.imageClass;
+      params.cancelButtonText = arguments[0].cancelButtonText || defaultParams.cancelButtonText;
+      params.cancelButtonColor = arguments[0].cancelButtonColor || defaultParams.cancelButtonColor;
+      params.cancelButtonClass = arguments[0].cancelButtonClass || params.cancelButtonClass;
+      params.buttonsStyling = arguments[0].buttonsStyling !== undefined ? arguments[0].buttonsStyling : defaultParams.buttonsStyling;
+      params.reverseButtons = arguments[0].reverseButtons !== undefined ? arguments[0].reverseButtons : defaultParams.reverseButtons;
+      params.showCloseButton = arguments[0].showCloseButton !== undefined ? arguments[0].showCloseButton : defaultParams.showCloseButton;
+      params.imageUrl = arguments[0].imageUrl || defaultParams.imageUrl;
+      params.imageWidth = arguments[0].imageWidth || defaultParams.imageWidth;
+      params.imageHeight = arguments[0].imageHeight || defaultParams.imageHeight;
+      params.imageClass = arguments[0].imageClass || defaultParams.imageClass;
 
-      params.input              = arguments[0].input || defaultParams.input;
-      params.inputPlaceholder   = arguments[0].inputPlaceholder || defaultParams.inputPlaceholder;
-      params.inputValue         = arguments[0].inputValue || defaultParams.inputValue;
-      params.inputOptions       = arguments[0].inputOptions || defaultParams.inputOptions;
-      params.inputAutoTrim      = arguments[0].inputAutoTrim !== undefined ? arguments[0].inputAutoTrim : defaultParams.inputAutoTrim;
-      params.inputClass         = arguments[0].inputClass || defaultParams.inputClass;
-      params.inputAttributes    = arguments[0].inputAttributes || defaultParams.inputAttributes;
-      params.inputValidator     = arguments[0].inputValidator || defaultParams.inputValidator;
+      params.input = arguments[0].input || defaultParams.input;
+      params.inputPlaceholder = arguments[0].inputPlaceholder || defaultParams.inputPlaceholder;
+      params.inputValue = arguments[0].inputValue || defaultParams.inputValue;
+      params.inputOptions = arguments[0].inputOptions || defaultParams.inputOptions;
+      params.inputAutoTrim = arguments[0].inputAutoTrim !== undefined ? arguments[0].inputAutoTrim : defaultParams.inputAutoTrim;
+      params.inputClass = arguments[0].inputClass || defaultParams.inputClass;
+      params.inputAttributes = arguments[0].inputAttributes || defaultParams.inputAttributes;
+      params.inputValidator = arguments[0].inputValidator || defaultParams.inputValidator;
 
-      params.extraParams        = arguments[0].extraParams;
+      params.extraParams = arguments[0].extraParams;
 
       if (params.input === 'email' && params.inputValidator === null) {
-        params.inputValidator = function(email) {
-          return new Promise(function(resolve, reject) {
+        params.inputValidator = function (email) {
+          return new Promise(function (resolve, reject) {
             var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
             if (emailRegex.test(email)) {
               resolve();
@@ -804,7 +775,7 @@ function modalDependant() {
       break;
 
     default:
-      window.console.error('Unexpected type of argument! Expected "string" or "object", got ' + typeof arguments[0]);
+      window.console.error('Unexpected type of argument! Expected "string" or "object", got ' + _typeof(arguments[0]));
       return false;
 
   }
@@ -816,23 +787,22 @@ function modalDependant() {
   // Modal interactions
   var modal = getModal();
 
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     // Close on timer
     if (params.timer) {
-      modal.timeout = setTimeout(function() {
-        swal.closeModal();
+      modal.timeout = setTimeout(function () {
+        _swal.closeModal();
         resolve(undefined);
       }, params.timer);
     }
 
     // input/select autofocus
-    var getInput = function() {
+    var getInput = function getInput() {
       switch (params.input) {
         case 'select':
           return getChildByClass(modal, swalClasses.select);
         case 'radio':
-          return modal.querySelector('.' + swalClasses.radio + ' input:checked') ||
-            modal.querySelector('.' + swalClasses.radio + ' input:first-child');
+          return modal.querySelector('.' + swalClasses.radio + ' input:checked') || modal.querySelector('.' + swalClasses.radio + ' input:first-child');
         case 'checkbox':
           return modal.querySelector('#' + swalClasses.checkbox);
         case 'textarea':
@@ -841,7 +811,7 @@ function modalDependant() {
           return getChildByClass(modal, swalClasses.input);
       }
     };
-    var getInputValue = function() {
+    var getInputValue = function getInputValue() {
       var input = getInput();
       switch (params.input) {
         case 'checkbox':
@@ -849,35 +819,35 @@ function modalDependant() {
         case 'radio':
           return input.checked ? input.value : null;
         default:
-          return params.inputAutoTrim? input.value.trim() : input.value;
+          return params.inputAutoTrim ? input.value.trim() : input.value;
       }
     };
 
     if (params.input) {
-      setTimeout(function() {
+      setTimeout(function () {
         focusInput(getInput());
       }, 0);
     }
 
-    var confirm = function(value) {
+    var confirm = function confirm(value) {
       if (params.preConfirm) {
-        params.preConfirm(value, params.extraParams).then(function(preConfirmValue) {
+        params.preConfirm(value, params.extraParams).then(function (preConfirmValue) {
           resolve(preConfirmValue || value);
-          swal.closeModal();
+          _swal.closeModal();
         });
       } else {
         resolve(value);
-        swal.closeModal();
+        _swal.closeModal();
       }
     };
 
     // Mouse interactions
-    var onButtonEvent = function(event) {
+    var onButtonEvent = function onButtonEvent(event) {
       var e = event || window.event;
       var target = e.target || e.srcElement;
       var targetedConfirm = hasClass(target, swalClasses.confirm);
-      var targetedCancel  = hasClass(target, swalClasses.cancel);
-      var modalIsVisible  = hasClass(modal, 'visible');
+      var targetedCancel = hasClass(target, swalClasses.cancel);
+      var modalIsVisible = hasClass(modal, 'visible');
 
       switch (e.type) {
         case 'mouseover':
@@ -917,31 +887,26 @@ function modalDependant() {
             if (params.input) {
               var inputValue = getInputValue();
               if (params.inputValidator) {
-                params.inputValidator(inputValue, params.extraParams).then(
-                  function() {
-                    confirm(inputValue);
-                  },
-                  function(error) {
-                    swal.showValidationError(error);
-                  }
-                );
+                params.inputValidator(inputValue, params.extraParams).then(function () {
+                  confirm(inputValue);
+                }, function (error) {
+                  _swal.showValidationError(error);
+                });
               } else {
                 confirm(inputValue);
               }
-
             } else {
               confirm(true);
             }
 
-          // Clicked 'cancel'
+            // Clicked 'cancel'
           } else if (targetedCancel && modalIsVisible) {
 
-            swal.closeModal();
-            resolve(false);
-
-          } else {
-            swal.closeModal();
-          }
+              _swal.closeModal();
+              resolve(false);
+            } else {
+              _swal.closeModal();
+            }
 
           break;
         default:
@@ -951,20 +916,20 @@ function modalDependant() {
     var $buttons = modal.querySelectorAll('button');
     var i;
     for (i = 0; i < $buttons.length; i++) {
-      $buttons[i].onclick     = onButtonEvent;
+      $buttons[i].onclick = onButtonEvent;
       $buttons[i].onmouseover = onButtonEvent;
-      $buttons[i].onmouseout  = onButtonEvent;
+      $buttons[i].onmouseout = onButtonEvent;
       $buttons[i].onmousedown = onButtonEvent;
     }
 
     // Remember the current document.onclick event.
     previousDocumentClick = document.onclick;
-    document.onclick = function(event) {
+    document.onclick = function (event) {
       var e = event || window.event;
       var target = e.target || e.srcElement;
 
-      if (hasClass(target, swalClasses.close) || (target === getOverlay() && params.allowOutsideClick)) {
-        swal.closeModal();
+      if (hasClass(target, swalClasses.close) || target === getOverlay() && params.allowOutsideClick) {
+        _swal.closeModal();
         resolve(undefined);
       }
     };
@@ -972,9 +937,7 @@ function modalDependant() {
     // Keyboard interactions
     var $confirmButton = modal.querySelector('button.' + swalClasses.confirm);
     var $cancelButton = modal.querySelector('button.' + swalClasses.cancel);
-    var $modalElements = [$confirmButton, $cancelButton].concat(Array.prototype.slice.call(
-      modal.querySelectorAll('button:not([class^=' + swalPrefix + ']), input:not([type=hidden]), textarea, select')
-    ));
+    var $modalElements = [$confirmButton, $cancelButton].concat(Array.prototype.slice.call(modal.querySelectorAll('button:not([class^=' + swalPrefix + ']), input:not([type=hidden]), textarea, select')));
     for (i = 0; i < $modalElements.length; i++) {
       $modalElements[i].onfocus = onButtonEvent;
       $modalElements[i].onblur = onButtonEvent;
@@ -994,17 +957,13 @@ function modalDependant() {
         if (index === $modalElements.length) {
           index = 0;
 
-        // go to last item
+          // go to last item
         } else if (index === -1) {
-          index = $modalElements.length - 1;
-        }
+            index = $modalElements.length - 1;
+          }
 
         // determine if element is visible, the following is borrowed from jqeury $(elem).is(':visible') implementation
-        if (
-          $modalElements[index].offsetWidth ||
-          $modalElements[index].offsetHeight ||
-          $modalElements[index].getClientRects().length
-        ) {
+        if ($modalElements[index].offsetWidth || $modalElements[index].offsetHeight || $modalElements[index].getClientRects().length) {
           $modalElements[index].focus();
           return;
         }
@@ -1044,7 +1003,6 @@ function modalDependant() {
         }
 
         stopEventPropagation(e);
-
       } else {
         if (keyCode === 13 || keyCode === 32) {
           if (btnIndex === -1) {
@@ -1052,7 +1010,7 @@ function modalDependant() {
             fireClick($confirmButton, e);
           }
         } else if (keyCode === 27 && params.allowEscapeKey === true) {
-          swal.closeModal();
+          _swal.closeModal();
           resolve(undefined);
         }
       }
@@ -1067,29 +1025,29 @@ function modalDependant() {
       $confirmButton.style.borderRightColor = params.confirmButtonColor;
     }
 
-    swal.enableLoading = function() {
+    _swal.enableLoading = function () {
       addClass($confirmButton, 'loading');
       addClass(modal, 'loading');
       $cancelButton.disabled = true;
     };
 
-    swal.disableLoading = function() {
+    _swal.disableLoading = function () {
       removeClass($confirmButton, 'loading');
       removeClass(modal, 'loading');
       $cancelButton.disabled = false;
     };
 
-    swal.enableButtons = function() {
+    _swal.enableButtons = function () {
       $confirmButton.disabled = false;
       $cancelButton.disabled = false;
     };
 
-    swal.disableButtons = function() {
+    _swal.disableButtons = function () {
       $confirmButton.disabled = true;
       $cancelButton.disabled = true;
     };
 
-    swal.showValidationError = function(error) {
+    _swal.showValidationError = function (error) {
       var $validationError = modal.querySelector('.' + swalClasses.validationerror);
       $validationError.innerHTML = error;
       show($validationError);
@@ -1099,7 +1057,7 @@ function modalDependant() {
       addClass(input, 'error');
     };
 
-    swal.resetValidationError = function() {
+    _swal.resetValidationError = function () {
       var $validationError = modal.querySelector('.' + swalClasses.validationerror);
       hide($validationError);
 
@@ -1107,13 +1065,13 @@ function modalDependant() {
       removeClass(input, 'error');
     };
 
-    swal.enableButtons();
-    swal.disableLoading();
-    swal.resetValidationError();
+    _swal.enableButtons();
+    _swal.disableLoading();
+    _swal.resetValidationError();
 
-    window.onfocus = function() {
+    window.onfocus = function () {
       // When the user has focused away and focused back from the whole window.
-      window.setTimeout(function() {
+      window.setTimeout(function () {
         // Put in a timeout to jump out of the event sequence. Calling focus() in the event
         // sequence confuses things.
         if (lastFocusedButton !== undefined) {
@@ -1126,8 +1084,7 @@ function modalDependant() {
 }
 
 if (typeof window !== 'undefined') {
-  window.sweetAlert = window.swal = swal;
+  window.sweetAlert = window.swal = _swal;
 } else {
   console.log('SweetAlert2 is a browser module');
 }
-
